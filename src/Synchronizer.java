@@ -7,7 +7,7 @@ public class Synchronizer {
             return false;
         }
 
-        String[] splitedContent = transformToStringArray(FileIO.read(path), "\n\n");
+        String[] splitedContent = FileIO.read(path).split("\n\n");
         
         if (splitedContent.length <= 1) {
             System.out.println("The file appears to be empty");
@@ -19,17 +19,12 @@ public class Synchronizer {
         return true;
     }
 
-    public static String[] transformToStringArray(String content, String separator) {
-        return content.split(separator);
-
-    }
-
     public static String synchronizeTime(String[] content, int offset) {
         String res = "";
         int counter = 1;
         for (String subtitle : content) {
-            String[] temp = transformToStringArray(subtitle, "\n");
-            String[] time = transformToStringArray(temp[1], " --> ");
+            String[] temp = subtitle.split("\n");
+            String[] time = temp[1].split(" --> ");
 
             String currentUpdated = "";
             String updatedTimer = SubtitleTimer.updateTimer(time[0], time[1], offset);
